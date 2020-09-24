@@ -1,0 +1,18 @@
+#run this command from the directry where you already have a Dockerfile,to create a custom image
+
+docker build . -t ctf_solr8_injection_image
+docker build . -t ctf_solr8_injection_final
+
+#to generate a container from a custom build image use the beo command.
+
+docker run -it --name ctf_solr_injection -p 8983:8983 ctf_solr8_injection_image
+docker run -it --name ctf_solr8_injection_final -p 80:5000 -p 8983:8983 ctf_solr8_injection_final
+docker run -d --name ctf_solr8_injection_final -p 80:5000 -p 8983:8983  ctf_solr8_injection_final
+
+#to create a core inside the solr use the below command
+docker exec -it ctf_solr_injection solr create_core -c ctf
+
+CMD echo CTF{S0lr_Inj3cti0n_I$_B@d} > CTF{S0lr_Inj3cti0n_I$_B@d}
+
+#to execute the docker compose file
+docker-compose up -d

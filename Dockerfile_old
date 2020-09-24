@@ -1,0 +1,24 @@
+FROM solr:8.1.1
+USER root
+# Download latest listing of available packages:
+RUN apt-get -y update
+# Upgrade already installed packages:
+RUN apt-get -y upgrade
+
+RUN precreate-core ctf
+RUN touch /opt/solr-8.1.1/server/CTF{S0lr_Inj3cti0n_Is_BAd}
+USER solr
+
+USER root
+RUN apt-get install python python-pip -y
+RUN apt-get install -y supervisor # Installing supervisord
+
+RUN pip install flask
+
+COPY env/app /opt/source_code
+
+ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf 
+
+EXPOSE 8983 5000 
+ENTRYPOINT ["/usr/bin/supervisord"]
+#CMD ["flask", "run", "--host=0.0.0.0"]

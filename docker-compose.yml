@@ -1,0 +1,13 @@
+version: "3.0"
+
+services:
+  solr_test:
+    container_name: ctf_solr_injection
+    image: solr:8.1.1
+    ports:
+      - 8983:8983
+    command:
+      - solr-precreate
+      - ctf # core name
+      - bash -c "touch /opt/solr-8.1.1/server/CTF{S0lr_Inj3cti0n_Is_BAd}"
+
