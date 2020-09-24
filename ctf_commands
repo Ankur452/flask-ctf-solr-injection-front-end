@@ -8,6 +8,7 @@ docker build . -t ctf_solr8_injection_final
 docker run -it --name ctf_solr_injection -p 8983:8983 ctf_solr8_injection_image
 docker run -it --name ctf_solr8_injection_final -p 80:5000 -p 8983:8983 ctf_solr8_injection_final
 docker run -d --name ctf_solr8_injection_final -p 80:5000 -p 8983:8983  ctf_solr8_injection_final
+docker run -d --name ctf_solr8_injection_final -p 80:5000 -p 8983:8983  ctf_solr8_injection_final_1
 
 #to create a core inside the solr use the below command
 docker exec -it ctf_solr_injection solr create_core -c ctf

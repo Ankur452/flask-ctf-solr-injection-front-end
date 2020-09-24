@@ -1,0 +1,37 @@
+FROM ubuntu:18.04
+
+# Download latest listing of available packages:
+RUN apt-get -y update
+# Upgrade already installed packages:
+RUN apt-get -y upgrade
+
+RUN apt-get install -y openjdk-11-jre openjdk-11-jdk
+RUN echo "JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64/" >> /etc/environment
+#RUN source /etc/environment
+
+RUN apt-get install wget -y
+RUN apt-get install -y supervisor # Installing supervisord
+RUN cd /opt
+RUN wget https://archive.apache.org/dist/lucene/solr/8.1.1/solr-8.1.1.tgz
+#RUN tar xzf solr-8.1.1.tgz
+RUN tar xzf solr-8.1.1.tgz solr-8.1.1/bin/install_solr_service.sh --strip-components=2
+RUN bash ./install_solr_service.sh solr-8.1.1.tgz
+
+#RUN useradd -m --groups sudo solr
+USER solr
+RUN /opt/solr-8.1.1/bin/solr start
+
+USER root
+#RUN /opt/solr-8.1.1/bin/solr create_core -c ctf
+RUN touch /opt/solr-8.1.1/server/CTF{S0lr_Inj3cti0n_Is_BAd}
+
+#this is the flask front end
+RUN apt-get install python python-pip -y
+RUN pip install flask
+
+COPY env/app /opt/source_code
+
+ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf 
+
+EXPOSE 8983 5000 
+ENTRYPOINT ["/usr/bin/supervisord"]
