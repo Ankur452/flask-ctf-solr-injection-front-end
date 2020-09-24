@@ -6,7 +6,7 @@ USER root
 
 RUN precreate-core ctf
 
-RUN touch /opt/solr-8.1.1/server/CTF{S0lr_Inj3cti0n_Is_BAd}
+RUN touch /opt/solr-8.1.1/server/CTF{S0lr_Inj3cti0n_1s_B4d}
 
 RUN chown -R solr /opt/solr/server/solr
 
